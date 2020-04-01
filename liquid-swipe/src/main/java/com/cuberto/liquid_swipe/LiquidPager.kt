@@ -48,7 +48,7 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
         })
     }
 
-    public fun setButtonDrawable(@DrawableRes drawableId: Int) {
+    fun setButtonDrawable(@DrawableRes drawableId: Int) {
         buttonDrawableId = drawableId
         rightEdgeController?.setButtonDrawable(resources.getDrawable(buttonDrawableId, null))
     }
@@ -60,10 +60,10 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
     }
 
     override fun getBitmap(direction: Int): Bitmap? {
-        if (direction == LEFT) {
-            return getBitmapAt(currentItem - 1)
+        return if (direction == LEFT) {
+            getBitmapAt(currentItem - 1)
         } else {
-            return getBitmapAt(currentItem + 1)
+            getBitmapAt(currentItem + 1)
         }
     }
 
@@ -130,7 +130,7 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
     }
 
     override fun onDraw() {
-        if (leftEdgeController?.hasBitmap() ?: false || rightEdgeController?.hasBitmap() ?: false) {
+        if (leftEdgeController?.hasBitmap() == true || rightEdgeController?.hasBitmap() == true) {
             return
         } else {
             leftEdgeController?.onPageChanged(currentItem)
