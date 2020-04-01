@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.ViewTreeObserver
 import androidx.annotation.DrawableRes
 import androidx.annotation.Px
+import androidx.core.view.doOnLayout
 import androidx.core.view.drawToBitmap
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -32,7 +33,10 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
         setWillNotDraw(false)
         viewTreeObserver.addOnDrawListener(this)
         addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
+
+            override fun onPageScrollStateChanged(state: Int) {
+                // Not used
+            }
 
             override fun onPageSelected(position: Int) {
                 invalidate()
@@ -42,10 +46,18 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
 
             override fun onPageScrolled(
                 position: Int,
-                positionOffset: Float, @Px positionOffsetPixels: Int
+                positionOffset: Float,
+                @Px positionOffsetPixels: Int
             ) {
+                // Not used
             }
         })
+
+        doOnLayout {
+            invalidate()
+            leftEdgeController?.onPageChanged(currentItem)
+            rightEdgeController?.onPageChanged(currentItem)
+        }
     }
 
     fun setButtonDrawable(@DrawableRes drawableId: Int) {
