@@ -94,9 +94,9 @@ class LeftEdgeController(
         if (!enabled || bitmap == null) {
             return
         }
-        if(shouldDraw) {
+        if (shouldDraw) {
             drawPath(canvas)
-            canvas?.drawBitmap(bitmap!!, view.getCurrentItem() * width.toFloat(), 0f, sourceOutPaint)
+            canvas?.drawBitmap(bitmap!!, getCanvasPosition() * width.toFloat(), 0f, sourceOutPaint)
         }
     }
 
@@ -115,7 +115,7 @@ class LeftEdgeController(
             RIGHT
         )
         wl.updatePath(width.toFloat(), height.toFloat())
-        translateMatrix.setTranslate(width.toFloat() * view.getCurrentItem(), 0f)
+        translateMatrix.setTranslate(width.toFloat() * getCanvasPosition(), 0f)
         wl.path.transform(translateMatrix)
         canvas?.drawPath(wl.path, erasorPaint)
     }

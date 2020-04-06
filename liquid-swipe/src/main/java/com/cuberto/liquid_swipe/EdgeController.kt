@@ -41,6 +41,9 @@ abstract class EdgeController(
 
     protected var swipeDirection = NONE
 
+    private var initialItem: Int = -1
+
+    protected fun getCanvasPosition(): Int = currentItem - initialItem
 
     init {
         erasorPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -60,6 +63,9 @@ abstract class EdgeController(
     }
 
     open fun onPageChanged(newPosition: Int) {
+        if (initialItem < 0) {
+            initialItem = newPosition
+        }
         translateMatrix.setTranslate(width.toFloat() * newPosition, 0f)
         currentX = width.toFloat()
         currentY = Y_RATIO * height

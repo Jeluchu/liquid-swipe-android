@@ -60,7 +60,7 @@ class LiquidPager : ViewPager, ViewTreeObserver.OnDrawListener, ViewI {
         }
     }
 
-    fun setButtonDrawable(@DrawableRes drawableId: Int) {
+    public fun setButtonDrawable(@DrawableRes drawableId: Int) {
         buttonDrawableId = drawableId
         rightEdgeController?.setButtonDrawable(resources.getDrawable(buttonDrawableId, null))
     }

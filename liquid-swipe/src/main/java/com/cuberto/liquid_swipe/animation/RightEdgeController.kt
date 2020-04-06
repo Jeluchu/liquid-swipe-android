@@ -20,14 +20,13 @@ class RightEdgeController(
     waveCenterY: Float,
     density: Float,
     view: ViewI
-) :
-    EdgeController(
-        viewWidth,
-        viewHeight,
-        waveCenterY,
-        density,
-        view
-    ) {
+) : EdgeController(
+    viewWidth,
+    viewHeight,
+    waveCenterY,
+    density,
+    view
+) {
 
     init {
         swipeDirection = LEFT
@@ -170,9 +169,8 @@ class RightEdgeController(
         }
         if (shouldDraw || animatingScale) {
             drawPath(canvas)
-            canvas?.drawBitmap(bitmap!!, currentItem * width.toFloat(), 0f, sourceOutPaint)
+            canvas?.drawBitmap(bitmap!!, getCanvasPosition() * width.toFloat(), 0f, sourceOutPaint)
         }
-
     }
 
     private fun drawPath(canvas: Canvas?) {
@@ -184,7 +182,7 @@ class RightEdgeController(
             LEFT
         )
         wl.updatePath(width.toFloat(), height.toFloat())
-        translateMatrix.setTranslate(width.toFloat() * currentItem, 0f)
+        translateMatrix.setTranslate(width.toFloat() * getCanvasPosition(), 0f)
         if (animatingScale) {
             wl.path.transform(scaleMatrix)
         }
@@ -208,14 +206,14 @@ class RightEdgeController(
 
     private fun updateButtonBounds() {
         buttonLeft =
-            (width - (helper.waveHorRadius(progress) - helper.sideWidth(progress) + 24 * density) + width * currentItem).toInt()
+            (width - (helper.waveHorRadius(progress) - helper.sideWidth(progress) + 24 * density) + width * getCanvasPosition()).toInt()
         buttonTop = (waveCenterY - ((buttonWidth / 2) * density)).toInt()
         buttonBottom = (waveCenterY + ((buttonWidth / 2) * density)).toInt()
         buttonRight = (buttonLeft + buttonWidth * density).toInt()
     }
 
     private fun isAButtonPress(ev: MotionEvent): Boolean {
-        return ev.x >= buttonLeft - width * currentItem && ev.x <= buttonRight - width * currentItem && ev.y >= buttonTop && ev.y <= buttonBottom
+        return ev.x >= buttonLeft - width * currentItem && ev.x <= buttonRight - width * getCanvasPosition() && ev.y >= buttonTop && ev.y <= buttonBottom
     }
 
     override fun onPageSwitchedLeft() {
